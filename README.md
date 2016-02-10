@@ -13,7 +13,7 @@ Building for Windows is only supported for MinGW64 bit
 
 ### Building for Linux
 
-0. Install **cURL** development package, for example, on Debian based systems you can use the `apt-get` utililty in the following mannger: `apt-get install libcurl4-openssl-dev
+0. Install **cURL** development package, for example, on Debian based systems you can use the `apt-get` utility in the following manner: `apt-get install libcurl4-openssl-dev
 `
 1. Load the workspace file **SendMail.workspace** in CodeLite and select the workspace configuration **Release** (Or Debug)
 2. Hit `F7`
