@@ -15,10 +15,14 @@
 #include <wx/artprov.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
+#include <wx/notebook.h>
+#include <wx/imaglist.h>
 #include <wx/statbox.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
+#include <wx/filepicker.h>
 #include <wx/button.h>
+#include <wx/stc/stc.h>
 #include <wx/menu.h>
 #if wxVERSION_NUMBER >= 2900
 #include <wx/persist.h>
@@ -31,6 +35,8 @@ class MainFrameBaseClass : public wxFrame
 {
 protected:
     wxPanel* m_mainPanel;
+    wxNotebook* m_notebook;
+    wxPanel* m_panel60;
     wxStaticText* m_staticText34;
     wxTextCtrl* m_textCtrlGmail;
     wxStaticText* m_staticText36;
@@ -43,9 +49,14 @@ protected:
     wxTextCtrl* m_textCtrlTo;
     wxStaticText* m_staticText45;
     wxTextCtrl* m_textCtrlSubject;
+    wxStaticText* m_staticText53;
+    wxFilePickerCtrl* m_filePickerAttachment;
     wxStaticText* m_staticText47;
     wxTextCtrl* m_textCtrlBody;
     wxButton* m_button19;
+    wxButton* m_button68;
+    wxPanel* m_panel62;
+    wxStyledTextCtrl* m_stcRaw;
     wxMenuBar* m_menuBar;
     wxMenu* m_name6;
     wxMenuItem* m_menuItem7;
@@ -54,6 +65,7 @@ protected:
 
 protected:
     virtual void OnSend(wxCommandEvent& event) { event.Skip(); }
+    virtual void OnInspect(wxCommandEvent& event) { event.Skip(); }
     virtual void OnExit(wxCommandEvent& event) { event.Skip(); }
     virtual void OnAbout(wxCommandEvent& event) { event.Skip(); }
 
@@ -70,9 +82,16 @@ public:
     wxTextCtrl* GetTextCtrlTo() { return m_textCtrlTo; }
     wxStaticText* GetStaticText45() { return m_staticText45; }
     wxTextCtrl* GetTextCtrlSubject() { return m_textCtrlSubject; }
+    wxStaticText* GetStaticText53() { return m_staticText53; }
+    wxFilePickerCtrl* GetFilePickerAttachment() { return m_filePickerAttachment; }
     wxStaticText* GetStaticText47() { return m_staticText47; }
     wxTextCtrl* GetTextCtrlBody() { return m_textCtrlBody; }
     wxButton* GetButton19() { return m_button19; }
+    wxButton* GetButton68() { return m_button68; }
+    wxPanel* GetPanel60() { return m_panel60; }
+    wxStyledTextCtrl* GetStcRaw() { return m_stcRaw; }
+    wxPanel* GetPanel62() { return m_panel62; }
+    wxNotebook* GetNotebook() { return m_notebook; }
     wxPanel* GetMainPanel() { return m_mainPanel; }
     wxMenuBar* GetMenuBar() { return m_menuBar; }
     MainFrameBaseClass(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("My Frame"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxCAPTION|wxRESIZE_BORDER|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxSYSTEM_MENU|wxCLOSE_BOX);

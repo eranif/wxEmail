@@ -32,10 +32,22 @@ void MainFrame::OnSend(wxCommandEvent& event)
     message.SetFrom(GetTextCtrlFrom()->GetValue())
         .SetTo(GetTextCtrlTo()->GetValue())
         .SetMessage(GetTextCtrlBody()->GetValue())
-        .SetSubject(GetTextCtrlSubject()->GetValue());
+        .SetSubject(GetTextCtrlSubject()->GetValue())
+        .SetAttachement(GetFilePickerAttachment()->GetPath());
 
     message.Finalize(); // Must finalize the message before sending it
     if(mailer.Send(message)) {
         ::wxMessageBox("Message Sent Succesfully!");
     }
+}
+void MainFrame::OnInspect(wxCommandEvent& event)
+{
+    wxEmailMessage message;
+    message.SetFrom(GetTextCtrlFrom()->GetValue())
+        .SetTo(GetTextCtrlTo()->GetValue())
+        .SetMessage(GetTextCtrlBody()->GetValue())
+        .SetSubject(GetTextCtrlSubject()->GetValue())
+        .SetAttachement(GetFilePickerAttachment()->GetPath());
+    GetStcRaw()->SetText(message.PayLoad());
+    GetNotebook()->SetSelection(1);
 }

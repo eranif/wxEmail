@@ -74,7 +74,7 @@
       <Compiler Options="-g;-O0;-Wall;$(shell wx-config --cflags --debug)" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
       </Compiler>
-      <Linker Options="$(shell wx-config --libs --debug)" Required="yes">
+      <Linker Options="$(shell wx-config --libs std,stc --debug)" Required="yes">
         <Library Value="curl"/>
       </Linker>
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>

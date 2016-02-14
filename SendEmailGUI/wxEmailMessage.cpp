@@ -1,6 +1,11 @@
 #include "wxEmailMessage.h"
 #include "wxEmailMessageID.h"
 #include <wx/datetime.h>
+#include <wx/ffile.h>
+#include <wx/base64.h>
+#include <wx/msgdlg.h>
+
+#define BOUNDRY_LINE "pj+EhsWuSQJxx7pr"
 
 wxEmailMessage::wxEmailMessage()
     : m_aschar(NULL)
@@ -32,23 +37,6 @@ wxString wxEmailMessage::GenerateID()
     return s;
 }
 
-/*
-  "Date: Mon, 29 Nov 2010 21:54:29 +1100\r\n",
-  "To: " TO "\r\n",
-  "From: " FROM "(Example User)\r\n",
-  "Cc: " CC "(Another example User)\r\n",
-  "Message-ID: <dcd7cb36-11db-487a-9f3a-e652a9458efd@rfcpedant.example.org>\r\n",
-  "Subject: SMTP TLS example message\r\n",
-  "\r\n",
-  "The body of the message starts here.\r\n",
-  "\r\n",
-  "It could be a lot of lines, could be MIME encoded, whatever.\r\n",
-  "Check RFC5322.\r\n",
-  NULL
-};
-
-*/
-
 wxString wxEmailMessage::PayLoad() const
 {
     wxString payload;
@@ -58,8 +46,57 @@ wxString wxEmailMessage::PayLoad() const
     payload << "Cc: \r\n";
     payload << "Message-ID: " << GenerateID() << "\r\n";
     payload << "Subject: " << GetSubject() << "\r\n";
+
+    bool hasAttachement = false;
+    wxString base64Attachment;
+    // Read the file and convert to base64
+    if(GetAttachement().IsOk() && GetAttachement().Exists()) {
+        FILE* fp = fopen(GetAttachement().GetFullPath().mb_str(wxConvUTF8).data(), "rb");
+        if(fp) {
+            fseek(fp, 0, SEEK_END);
+            size_t len = ftell(fp);
+            fseek(fp, 0, SEEK_SET);
+            hasAttachement = true;
+
+            char* buffer = new char[len];
+            fread(buffer, 1, len, fp);
+            fclose(fp);
+            base64Attachment = ::wxBase64Encode(buffer, len);
+            wxDELETEA(buffer);
+        }
+    }
+
+    // Sending attachment
+    payload << "Content-Type: multipart/mixed; boundary=\"" << BOUNDRY_LINE << "\"\r\n";
+    payload << "Mime-version: 1.0\r\n";
     payload << "\r\n";
-    payload << GetMessage() << "\r\n";
+    payload << "This is a multi-part message in MIME format. \r\n";
+
+    // Message body
+    if(!GetMessage().IsEmpty()) {
+        payload << "\r\n--" << BOUNDRY_LINE << "\r\n";
+        payload << "Content-Type: text/plain; charset=\"us-ascii\"\r\n";
+        payload << "Content-Transfer-Encoding: quoted-printable \r\n";
+        payload << "\r\n";
+        payload << GetMessage() << "\r\n";
+    }
+
+    if(hasAttachement) {
+        payload << "\r\n--" << BOUNDRY_LINE << "\r\n";
+        payload << "Content-Type: application/octet-stream; name=\"" << GetAttachement().GetFullName() << "\""
+                << "\r\n";
+        payload << "Content-Transfer-Encoding: base64 \r\n";
+        payload << "Content-Disposition: attachement; filename=\"" << GetAttachement().GetFullName() << "\"\r\n";
+        payload << "\r\n";
+        // Split the content to 76 chars per line
+        while(!base64Attachment.IsEmpty()) {
+            size_t bytes = (base64Attachment.length() >= 76) ? 76 : base64Attachment.length();
+            wxString line = base64Attachment.Mid(0, bytes);
+            payload << line << "\r\n";
+            base64Attachment = base64Attachment.Mid(bytes);
+        }
+    }
+    payload << "\r\n";
     return payload;
 }
 

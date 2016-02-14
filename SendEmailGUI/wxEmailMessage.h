@@ -2,6 +2,7 @@
 #define WXEMAILMESSAGE_H
 
 #include <wx/string.h>
+#include <wx/filename.h>
 
 class wxEmailMessage
 {
@@ -10,6 +11,7 @@ class wxEmailMessage
     wxString m_subject;
     wxString m_message;
     wxString m_payload;
+    wxFileName m_attachement;
 
     char* m_aschar;
     size_t m_pos;
@@ -28,7 +30,7 @@ public:
     size_t Len() const { return m_len; }
     void Consume(size_t bytes) { m_pos += bytes; }
     bool HasMore() const { return (m_len > m_pos); }
-    
+
     /**
      * @brief generate a unique message ID
      */
@@ -39,6 +41,12 @@ public:
      */
     wxString PayLoad() const;
 
+    wxEmailMessage& SetAttachement(const wxFileName& attachement)
+    {
+        this->m_attachement = attachement;
+        return *this;
+    }
+    const wxFileName& GetAttachement() const { return m_attachement; }
     wxEmailMessage& SetFrom(const wxString& from)
     {
         this->m_from = from;
