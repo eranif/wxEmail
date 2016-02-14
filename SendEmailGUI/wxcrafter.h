@@ -4,8 +4,8 @@
 // Do not modify this file by hand!
 //////////////////////////////////////////////////////////////////////
 
-#ifndef SENDMAIL_SENDEMAILGUI_WXCRAFTER_BASE_CLASSES_H
-#define SENDMAIL_SENDEMAILGUI_WXCRAFTER_BASE_CLASSES_H
+#ifndef WXEMAIL_SENDEMAILGUI_WXCRAFTER_BASE_CLASSES_H
+#define WXEMAIL_SENDEMAILGUI_WXCRAFTER_BASE_CLASSES_H
 
 #include <wx/settings.h>
 #include <wx/xrc/xmlres.h>

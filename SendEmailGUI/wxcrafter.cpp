@@ -73,7 +73,7 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent, wxWindowID id, const wx
     
     flexGridSizer32->Add(m_staticText38, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
     
-    m_textCtrlSmtp = new wxTextCtrl(m_mainPanel, wxID_ANY, wxT("smtp://smtp.gmail.com:587"), wxDefaultPosition, wxSize(-1,-1), 0);
+    m_textCtrlSmtp = new wxTextCtrl(m_mainPanel, wxID_ANY, wxT("smtps://smtp.gmail.com:465"), wxDefaultPosition, wxSize(-1,-1), 0);
     m_textCtrlSmtp->SetToolTip(_("Gmail smtp URL"));
     #if wxVERSION_NUMBER >= 3000
     m_textCtrlSmtp->SetHint(wxT(""));

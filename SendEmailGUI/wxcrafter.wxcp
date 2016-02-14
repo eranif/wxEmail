@@ -792,7 +792,7 @@
                 }, {
                  "type": "string",
                  "m_label": "Value:",
-                 "m_value": "smtp://smtp.gmail.com:587"
+                 "m_value": "smtps://smtp.gmail.com:465"
                 }, {
                  "type": "string",
                  "m_label": "Text Hint",

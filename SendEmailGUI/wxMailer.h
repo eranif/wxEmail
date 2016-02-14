@@ -15,8 +15,7 @@ public:
      * @param email the sender's gmail email
      * @param password the email's password
      * @param smtpURL the smtp URL, for gmail it will be something like:
-     * "smtp://smtp.gmail.com:465"
-     *
+     * "smtps://smtp.gmail.com:465"
      */
     wxMailer(const wxString& email, const wxString& password, const wxString& smtpURL);
     virtual ~wxMailer();

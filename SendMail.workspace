@@ -2,7 +2,7 @@
 <CodeLite_Workspace Name="SendMail" Database="">
   <Project Name="SendEmailGUI" Path="SendEmailGUI/SendEmailGUI.project" Active="Yes"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="no">
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
       <Project Name="SendEmailGUI" ConfigName="Debug"/>
     </WorkspaceConfiguration>
@@ -10,7 +10,7 @@
       <Environment/>
       <Project Name="SendEmailGUI" ConfigName="Release"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Debug_Windows" Selected="yes">
+    <WorkspaceConfiguration Name="Debug_Windows" Selected="no">
       <Environment/>
       <Project Name="SendEmailGUI" ConfigName="Debug_Windows"/>
     </WorkspaceConfiguration>
