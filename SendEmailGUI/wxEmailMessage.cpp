@@ -47,25 +47,6 @@ wxString wxEmailMessage::PayLoad() const
     payload << "Message-ID: " << GenerateID() << "\r\n";
     payload << "Subject: " << GetSubject() << "\r\n";
 
-    bool hasAttachement = false;
-    wxString base64Attachment;
-    // Read the file and convert to base64
-    if(GetAttachement().IsOk() && GetAttachement().Exists()) {
-        FILE* fp = fopen(GetAttachement().GetFullPath().mb_str(wxConvUTF8).data(), "rb");
-        if(fp) {
-            fseek(fp, 0, SEEK_END);
-            size_t len = ftell(fp);
-            fseek(fp, 0, SEEK_SET);
-            hasAttachement = true;
-
-            char* buffer = new char[len];
-            fread(buffer, 1, len, fp);
-            fclose(fp);
-            base64Attachment = ::wxBase64Encode(buffer, len);
-            wxDELETEA(buffer);
-        }
-    }
-
     // Sending attachment
     payload << "Content-Type: multipart/mixed; boundary=\"" << BOUNDRY_LINE << "\"\r\n";
     payload << "Mime-version: 1.0\r\n";
@@ -81,21 +62,12 @@ wxString wxEmailMessage::PayLoad() const
         payload << GetMessage() << "\r\n";
     }
 
-    if(hasAttachement) {
-        payload << "\r\n--" << BOUNDRY_LINE << "\r\n";
-        payload << "Content-Type: application/octet-stream; name=\"" << GetAttachement().GetFullName() << "\""
-                << "\r\n";
-        payload << "Content-Transfer-Encoding: base64 \r\n";
-        payload << "Content-Disposition: attachement; filename=\"" << GetAttachement().GetFullName() << "\"\r\n";
-        payload << "\r\n";
-        // Split the content to 76 chars per line
-        while(!base64Attachment.IsEmpty()) {
-            size_t bytes = (base64Attachment.length() >= 76) ? 76 : base64Attachment.length();
-            wxString line = base64Attachment.Mid(0, bytes);
-            payload << line << "\r\n";
-            base64Attachment = base64Attachment.Mid(bytes);
+    if(!m_attachements.IsEmpty()) {
+        for(size_t i = 0; i < m_attachements.size(); ++i) {
+            DoAddAttachment(m_attachements.Item(i), payload);
         }
     }
+
     payload << "\r\n";
     return payload;
 }
@@ -108,4 +80,41 @@ void wxEmailMessage::Finalize()
     strcpy(m_aschar, p);
     m_len = strlen(m_aschar);
     m_pos = 0;
+}
+
+void wxEmailMessage::DoAddAttachment(const wxString& filename, wxString& payload) const
+{
+    wxString base64Attachment;
+    wxFileName fn(filename);
+
+    if(!fn.IsOk() || !fn.Exists()) return;
+
+    FILE* fp = fopen(fn.GetFullPath().mb_str(wxConvUTF8).data(), "rb");
+    if(fp) {
+        fseek(fp, 0, SEEK_END);
+        size_t len = ftell(fp);
+        fseek(fp, 0, SEEK_SET);
+
+        char* buffer = new char[len];
+        fread(buffer, 1, len, fp);
+        fclose(fp);
+        base64Attachment = ::wxBase64Encode(buffer, len);
+        wxDELETEA(buffer);
+    }
+
+    if(!base64Attachment.IsEmpty()) {
+        payload << "\r\n--" << BOUNDRY_LINE << "\r\n";
+        payload << "Content-Type: application/octet-stream; name=\"" << fn.GetFullName() << "\""
+                << "\r\n";
+        payload << "Content-Transfer-Encoding: base64 \r\n";
+        payload << "Content-Disposition: attachement; filename=\"" << fn.GetFullName() << "\"\r\n";
+        payload << "\r\n";
+        // Split the content to 76 chars per line
+        while(!base64Attachment.IsEmpty()) {
+            size_t bytes = (base64Attachment.length() >= 76) ? 76 : base64Attachment.length();
+            wxString line = base64Attachment.Mid(0, bytes);
+            payload << line << "\r\n";
+            base64Attachment = base64Attachment.Mid(bytes);
+        }
+    }
 }

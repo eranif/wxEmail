@@ -11,11 +11,14 @@ class wxEmailMessage
     wxString m_subject;
     wxString m_message;
     wxString m_payload;
-    wxFileName m_attachement;
+    wxArrayString m_attachements;
 
     char* m_aschar;
     size_t m_pos;
     size_t m_len;
+
+protected:
+    void DoAddAttachment(const wxString& filename, wxString& payload) const;
 
 public:
     wxEmailMessage();
@@ -41,12 +44,17 @@ public:
      */
     wxString PayLoad() const;
 
-    wxEmailMessage& SetAttachement(const wxFileName& attachement)
+    /**
+     * @brief add attachment to email
+     */
+    wxEmailMessage& AddAttachment(const wxString& filename)
     {
-        this->m_attachement = attachement;
+        if(m_attachements.Index(filename) == wxNOT_FOUND) {
+            m_attachements.Add(filename);
+        }
         return *this;
     }
-    const wxFileName& GetAttachement() const { return m_attachement; }
+
     wxEmailMessage& SetFrom(const wxString& from)
     {
         this->m_from = from;

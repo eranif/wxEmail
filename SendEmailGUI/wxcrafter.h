@@ -21,8 +21,8 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/filepicker.h>
-#include <wx/button.h>
 #include <wx/stc/stc.h>
+#include <wx/button.h>
 #include <wx/menu.h>
 #if wxVERSION_NUMBER >= 2900
 #include <wx/persist.h>
@@ -51,12 +51,14 @@ protected:
     wxTextCtrl* m_textCtrlSubject;
     wxStaticText* m_staticText53;
     wxFilePickerCtrl* m_filePickerAttachment;
+    wxStaticText* m_staticText72;
+    wxFilePickerCtrl* m_filePickerAttachment2;
     wxStaticText* m_staticText47;
     wxTextCtrl* m_textCtrlBody;
-    wxButton* m_button19;
-    wxButton* m_button68;
     wxPanel* m_panel62;
     wxStyledTextCtrl* m_stcRaw;
+    wxButton* m_button19;
+    wxButton* m_button68;
     wxMenuBar* m_menuBar;
     wxMenu* m_name6;
     wxMenuItem* m_menuItem7;
@@ -84,14 +86,16 @@ public:
     wxTextCtrl* GetTextCtrlSubject() { return m_textCtrlSubject; }
     wxStaticText* GetStaticText53() { return m_staticText53; }
     wxFilePickerCtrl* GetFilePickerAttachment() { return m_filePickerAttachment; }
+    wxStaticText* GetStaticText72() { return m_staticText72; }
+    wxFilePickerCtrl* GetFilePickerAttachment2() { return m_filePickerAttachment2; }
     wxStaticText* GetStaticText47() { return m_staticText47; }
     wxTextCtrl* GetTextCtrlBody() { return m_textCtrlBody; }
-    wxButton* GetButton19() { return m_button19; }
-    wxButton* GetButton68() { return m_button68; }
     wxPanel* GetPanel60() { return m_panel60; }
     wxStyledTextCtrl* GetStcRaw() { return m_stcRaw; }
     wxPanel* GetPanel62() { return m_panel62; }
     wxNotebook* GetNotebook() { return m_notebook; }
+    wxButton* GetButton19() { return m_button19; }
+    wxButton* GetButton68() { return m_button68; }
     wxPanel* GetMainPanel() { return m_mainPanel; }
     wxMenuBar* GetMenuBar() { return m_menuBar; }
     MainFrameBaseClass(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("My Frame"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxCAPTION|wxRESIZE_BORDER|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxSYSTEM_MENU|wxCLOSE_BOX);

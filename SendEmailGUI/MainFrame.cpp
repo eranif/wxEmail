@@ -32,22 +32,35 @@ void MainFrame::OnSend(wxCommandEvent& event)
     message.SetFrom(GetTextCtrlFrom()->GetValue())
         .SetTo(GetTextCtrlTo()->GetValue())
         .SetMessage(GetTextCtrlBody()->GetValue())
-        .SetSubject(GetTextCtrlSubject()->GetValue())
-        .SetAttachement(GetFilePickerAttachment()->GetPath());
+        .SetSubject(GetTextCtrlSubject()->GetValue());
+        
+    if(!GetFilePickerAttachment()->GetPath().IsEmpty()) {
+        message.AddAttachment(GetFilePickerAttachment()->GetPath());
+    }
+    if(!GetFilePickerAttachment2()->GetPath().IsEmpty()) {
+        message.AddAttachment(GetFilePickerAttachment2()->GetPath());
+    }
 
     message.Finalize(); // Must finalize the message before sending it
     if(mailer.Send(message)) {
         ::wxMessageBox("Message Sent Succesfully!");
     }
 }
+
 void MainFrame::OnInspect(wxCommandEvent& event)
 {
     wxEmailMessage message;
     message.SetFrom(GetTextCtrlFrom()->GetValue())
         .SetTo(GetTextCtrlTo()->GetValue())
         .SetMessage(GetTextCtrlBody()->GetValue())
-        .SetSubject(GetTextCtrlSubject()->GetValue())
-        .SetAttachement(GetFilePickerAttachment()->GetPath());
+        .SetSubject(GetTextCtrlSubject()->GetValue());
+
+    if(!GetFilePickerAttachment()->GetPath().IsEmpty()) {
+        message.AddAttachment(GetFilePickerAttachment()->GetPath());
+    }
+    if(!GetFilePickerAttachment2()->GetPath().IsEmpty()) {
+        message.AddAttachment(GetFilePickerAttachment2()->GetPath());
+    }
     GetStcRaw()->SetText(message.PayLoad());
     GetNotebook()->SetSelection(1);
 }

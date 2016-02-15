@@ -100,7 +100,7 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent, wxWindowID id, const wx
     flexGridSizer41->SetFlexibleDirection( wxBOTH );
     flexGridSizer41->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
     flexGridSizer41->AddGrowableCol(1);
-    flexGridSizer41->AddGrowableRow(4);
+    flexGridSizer41->AddGrowableRow(5);
     
     staticBoxSizer23->Add(flexGridSizer41, 1, wxALL|wxEXPAND, 5);
     
@@ -137,13 +137,21 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent, wxWindowID id, const wx
     
     flexGridSizer41->Add(m_textCtrlSubject, 0, wxALL|wxEXPAND, 5);
     
-    m_staticText53 = new wxStaticText(m_panel60, wxID_ANY, _("Attachment:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    m_staticText53 = new wxStaticText(m_panel60, wxID_ANY, _("Attachment #1:"), wxDefaultPosition, wxSize(-1,-1), 0);
     
     flexGridSizer41->Add(m_staticText53, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
     
-    m_filePickerAttachment = new wxFilePickerCtrl(m_panel60, wxID_ANY, wxEmptyString, _("Select a file"), wxT("*"), wxDefaultPosition, wxSize(-1,-1), wxFLP_DEFAULT_STYLE|wxFLP_USE_TEXTCTRL|wxFLP_SMALL);
+    m_filePickerAttachment = new wxFilePickerCtrl(m_panel60, wxID_ANY, wxEmptyString, _("Select a file"), wxT("*"), wxDefaultPosition, wxSize(-1,-1), wxFLP_DEFAULT_STYLE|wxFLP_USE_TEXTCTRL|wxFLP_SMALL|wxFLP_FILE_MUST_EXIST);
     
     flexGridSizer41->Add(m_filePickerAttachment, 0, wxALL|wxEXPAND, 5);
+    
+    m_staticText72 = new wxStaticText(m_panel60, wxID_ANY, _("Attachment #2:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer41->Add(m_staticText72, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_filePickerAttachment2 = new wxFilePickerCtrl(m_panel60, wxID_ANY, wxEmptyString, _("Select a file"), wxT("*"), wxDefaultPosition, wxSize(-1,-1), wxFLP_DEFAULT_STYLE|wxFLP_USE_TEXTCTRL|wxFLP_SMALL|wxFLP_FILE_MUST_EXIST);
+    
+    flexGridSizer41->Add(m_filePickerAttachment2, 0, wxALL|wxEXPAND, 5);
     
     m_staticText47 = new wxStaticText(m_panel60, wxID_ANY, _("Body:"), wxDefaultPosition, wxSize(-1,-1), 0);
     
@@ -152,19 +160,6 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent, wxWindowID id, const wx
     m_textCtrlBody = new wxTextCtrl(m_panel60, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(-1,-1), wxTE_RICH2|wxTE_PROCESS_TAB|wxTE_PROCESS_ENTER|wxTE_MULTILINE);
     
     flexGridSizer41->Add(m_textCtrlBody, 1, wxALL|wxEXPAND, 5);
-    
-    wxBoxSizer* boxSizer70 = new wxBoxSizer(wxHORIZONTAL);
-    
-    boxSizer24->Add(boxSizer70, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL, 5);
-    
-    m_button19 = new wxButton(m_panel60, wxID_ANY, _("Send"), wxDefaultPosition, wxSize(-1,-1), 0);
-    m_button19->SetDefault();
-    
-    boxSizer70->Add(m_button19, 0, wxALL|wxALIGN_RIGHT, 5);
-    
-    m_button68 = new wxButton(m_panel60, wxID_ANY, _("Inspect"), wxDefaultPosition, wxSize(-1,-1), 0);
-    
-    boxSizer70->Add(m_button68, 0, wxALL, 5);
     
     m_panel62 = new wxPanel(m_notebook, wxID_ANY, wxDefaultPosition, wxSize(-1,-1), wxTAB_TRAVERSAL);
     m_notebook->AddPage(m_panel62, _("Inspect"), false);
@@ -222,6 +217,19 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent, wxWindowID id, const wx
     m_stcRaw->SetKeyWords(4, wxT(""));
     
     boxSizer64->Add(m_stcRaw, 1, wxALL|wxEXPAND, 5);
+    
+    wxBoxSizer* boxSizer70 = new wxBoxSizer(wxHORIZONTAL);
+    
+    boxSizer56->Add(boxSizer70, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5);
+    
+    m_button19 = new wxButton(m_mainPanel, wxID_ANY, _("Send"), wxDefaultPosition, wxSize(-1,-1), 0);
+    m_button19->SetDefault();
+    
+    boxSizer70->Add(m_button19, 0, wxALL|wxALIGN_RIGHT, 5);
+    
+    m_button68 = new wxButton(m_mainPanel, wxID_ANY, _("Inspect"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    boxSizer70->Add(m_button68, 0, wxALL, 5);
     
     m_menuBar = new wxMenuBar(0);
     this->SetMenuBar(m_menuBar);
